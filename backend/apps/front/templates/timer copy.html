@@ -1,0 +1,135 @@
+{% extends 'index.html'%}
+{% load static %}
+{% block content %}
+<div class="d-flex flex-column">
+    <div class="col-md-4 col-12 input-group input-group-lg mx-auto">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-lg">Código Pieza</span>
+        </div>
+        <input id="codigo_pieza" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+    </div>
+    
+
+    <div class="d-flex flex-row">
+        <div class="frame" style="right: 30%;">
+            <!-- <div class="all_container float-left py-3">
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-lg">Código Pieza</span>
+                    </div>
+                    <input id="codigo_pieza" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="input-group input-group-lg py-3">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-lg">T. Estimado</span>
+                    </div>
+                    <input id="tiempo_estimado" type="number" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+                </div>
+                <div class="btn-group dropright py-3">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Seleccionar Máquina
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item">VF-4</a>
+                        <a class="dropdown-item">VF-2</a>
+                        <a class="dropdown-item">ST-35</a>
+                    </div>
+                </div>
+                <div class="btn-group dropright">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Seleccionar Operador
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item">Luciano</a>
+                        <a class="dropdown-item">Dario</a>
+                        <a class="dropdown-item">Gaston</a>
+                    </div>
+                </div>
+                
+            </div> -->
+            <div class="frame-cover"></div>
+            
+            <h1 id="piece_code" class="timer_lettering">VF2</h1>
+            <section class="frame_imputs">
+                <div class="hours_container">
+                    <div class="input_dark">
+                        <div id="hours" class="input_hours">00</div>
+                    </div>
+                    <div class="hours_leterring">Hours</div>
+                </div>
+                <div class="minutes_container">
+                    <div class="input_dark">
+                        <div id="minutes" class="input_hours">00</div>
+                    </div>
+                    <div class="minutes_leterring">Minutes</div>
+                </div>
+                <div class="seconds_container">
+                    <div class="input_dark">
+                        <div id="seconds" class="input_hours">00</div>
+                    </div>
+                    <div class="minutes_leterring">Seconds</div>
+                </div>
+            </section>
+            <section class="frame_imputs_pause">
+                <div class="hours_container">
+                    <div class="input_red">
+                        <div id="hours_stoped" class="input_hours">00</div>
+                    </div>
+                    <div class="hours_leterring">Hours</div>
+                </div>
+                <div class="minutes_container">
+                    <div class="input_red">
+                        <div id="minutes_stoped" class="input_hours">00</div>
+                    </div>
+                    <div class="minutes_leterring">Minutes</div>
+                </div>
+                <div class="seconds_container">
+                    <div class="input_red">
+                        <div id="seconds_stoped" class="input_hours">00</div>
+                    </div>
+                    <div class="minutes_leterring">Seconds</div>
+                </div>
+            </section>
+            <div style="top: 50px;">
+                <button id="btn_reset" class="btn reset_button btn-warning">RESET</button>
+                <button id="btn_pause" class="btn pause_button btn-danger">PAUSE</button>
+                <button id="btn_start" class="btn start_button btn-success">START</button>
+                <!-- <button id="btn_start" class="btn start_button btn-success">START</button> -->
+            </div>
+            <div id="pause_state" class="bg-red"></div>
+            <!-- <div class="bg-yellow"></div> -->
+            <div id="unpause_state" class="bg-green"></div>
+        </div>
+        <div class="col-12" style="top: 80px;">
+            <div class="col-12 d-flex flex-column py-3">
+                <div id="contenedor-terminal-texto" class="card col-md-3 mx-auto border shadow rounded bg-white p-1" style="height: 20%;">
+                    <div id="salidaDeTexto"></div>
+                        {% include 'cuadroMensajes.html'%}
+                </div>
+
+                <div class="col-md-2 col-12  mx-auto input-group py-2" style="width: 5%;left: 100px;">
+                    <button id="btn_send" class="btn btn-success">Enviar</button>
+                </div>
+            </div>
+
+            <!-- <button id="btn_start" class="btn btn-success">START</button> -->
+            <div class="col-12">
+                <div id="contenedor-terminal-texto" class="card col-md-3 mx-auto border shadow rounded bg-white p-1" style="height: 20%;">
+                    <div id="salidaDeTexto"></div>
+                        {% include 'cuadroMensajesPausa.html'%}
+                </div>
+
+                <div class="col-md-3 col-12 input-group input-group-lg mx-auto py-2" style="top: 15%;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-lg">M. Pausa</span>
+                    </div>
+                    <input id="input_m_pausa" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+                    <button id="btn_select" class="btn btn-success">Añadir</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

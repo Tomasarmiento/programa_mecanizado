@@ -1,0 +1,83 @@
+{% extends 'index.html'%}
+{% load static %}
+{% block content %}
+
+
+<head>
+    <script  src="{% static 'js/laser.js' %}"></script>
+</head>
+
+
+
+
+<div class="all_container float-left py-3">
+    <h1>Añadir Nesting</h1>
+    <div class="btn-group dropright py-3 center">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Seleccionar Nesting
+        </button>
+        <div class="dropdown-menu">
+            <a id="nesting_a" class="dropdown-item">Nesting Bancales A</a>
+            <a id="nesting_b" class="dropdown-item">Nesting Bancales B</a>
+            <a id="nesting_c" class="dropdown-item">Nesting Bancales C</a>
+            <a id="nesting_d" class="dropdown-item">Nesting Bancales Nesting Bancales D+BrazoXYZ+Parking</a>
+            <a id="nesting_col_a" class="dropdown-item">Nesting Columnas A</a>
+            <a id="nesting_col_b" class="dropdown-item">Nesting Columnas B+Soplador+Volteador</a>
+            <a id="nesting_2mm" class="dropdown-item">Nesting 2mm</a>
+        </div>
+    </div>
+    <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-lg">Código Nesting</span>
+        </div>
+        <input id="nesting_input" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" disabled>
+        <button id="finish_nesting" class="btn btn-success">Finalizar</button>
+    </div>
+    <hr style="height: 8px;background-color:white">
+
+
+
+
+    <!-- <hr size="5px" width="95%" color="white"/> -->
+
+
+
+
+    <h1>Añadir pieza suelta</h1>
+    <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-lg">Código Pieza: AR-CHA-</span>
+        </div>
+
+        <input value= 0 id="piece_input" type="number" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+        
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="multiply_leyend">*1</span>
+        </div>
+        <button id="add_piece" class="btn btn-success">Añadir</button>
+    </div>
+
+
+    <div id="" class="btn-group dropright py-3 center">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Cantidad
+        </button>
+        <div id="container_multiply" class="dropdown-menu">
+            <a id="multiply_1" class="dropdown-item">1</a>
+            <a id="multiply_2" class="dropdown-item">2</a>
+            <a id="multiply_3" class="dropdown-item">3</a>
+            <a id="multiply_4" class="dropdown-item">4</a>
+            <a id="multiply_5" class="dropdown-item">5</a>
+            <a id="multiply_6" class="dropdown-item">6</a>
+            <a id="multiply_7" class="dropdown-item">7</a>
+            <a id="multiply_8" class="dropdown-item">8</a>
+            <a id="multiply_9" class="dropdown-item">9</a>
+            <a id="multiply_10" class="dropdown-item">10</a>
+        </div>
+    </div>
+    
+    
+    <!-- <h1>Añadir pieza suelta</h1> -->
+</div>
+
+{% endblock %}
