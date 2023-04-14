@@ -23,19 +23,19 @@ window.addEventListener("DOMContentLoaded", () => {
     
         
         btn_start.addEventListener("click", (e) => {
-            sendCommandTimerVF4("start","vf4")
+            sendCommandTimerst35("start","st35")
             document.getElementById("pause_state").style.backgroundColor  = '#31af03'
             first_start ++
             if (first_start == 1){
                 var today = new Date();
                 start_hour = today.toLocaleString();
-                sessionStorage.setItem("vf4_startTime", (start_hour));
+                sessionStorage.setItem("st35_startTime", (start_hour));
             }
     
         });
     
         btn_pause.addEventListener("click", (e) => {
-            sendCommandTimerVF4("pause","vf4")
+            sendCommandTimerst35("pause","st35")
             btn_start.disabled = true;
             document.getElementById("pause_state").style.backgroundColor  = '#ff0000'
             input_pause_motive.disabled = false;
@@ -44,19 +44,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
         btn_reset_all.addEventListener("click", (e) => {
             input_codigo_pieza.disabled = false;
-            sendFinishStartPieceVF4("reset_all","vf4")
+            sendFinishStartPiecest35("reset_all","st35")
             first_start = 0
         });
 
         btn_ss_send.addEventListener("click", (e) => {
-            sendSS("vf4")
+            sendSS("st35")
             input_codigo_pieza.disabled = false;
             input_codigo_pieza.value = 0
         });
     
         btn_reset.addEventListener("click", (e) => {
             input_codigo_pieza.disabled = false;
-            sendFinishStartPieceVF4("reset","vf4")
+            sendFinishStartPiecest35("reset","st35")
             first_start = 0
             btn_start.disabled = false;
 
@@ -64,8 +64,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
         btn_select.addEventListener("click", (event) => {
             input_codigo_pieza.disabled = true;
-            sendFinishStartPieceVF4(true,"vf4")
-            sendSelectedPiece(input_codigo_pieza.value,"vf4")
+            sendFinishStartPiecest35(true,"st35")
+            sendSelectedPiece(input_codigo_pieza.value,"st35")
             
 
         });
@@ -75,15 +75,15 @@ window.addEventListener("DOMContentLoaded", () => {
                 alert("Campo de errores vacio !")
             } else{
                 try {
-                    if (!sessionStorage.getItem("vf4_msg_pause")) throw sessionStorage.setItem("vf4_msg_pause", "");
+                    if (!sessionStorage.getItem("st35_msg_pause")) throw sessionStorage.setItem("st35_msg_pause", "");
                 }
                 finally {
                     //poner funcion que empuje todo el mensaje al local en vez de lo q esta bajo
-                    sessionStorage.setItem("vf4_msg_pause", JSON.stringify(msg_pause()));
-                    value = JSON.parse(sessionStorage.getItem("vf4_msg_pause"))
+                    sessionStorage.setItem("st35_msg_pause", JSON.stringify(msg_pause()));
+                    value = JSON.parse(sessionStorage.getItem("st35_msg_pause"))
                     InsertarTexto(value, false)
                     // value_of_pause = (value[1].split(":")).pop() //posicion de vector donde se encuentra el valor del input
-                    sendMsgStop(input_pause_motive.value,"vf4")
+                    sendMsgStop(input_pause_motive.value,"st35")
                     input_pause_motive.value = ""
                     btn_start.disabled = false;
                     input_pause_motive.disabled = true;
@@ -93,19 +93,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
         btn_finish.addEventListener("click", (event) => {
             first_start = 0
-            sendFinishStartPieceVF4(false,"vf4")
+            sendFinishStartPiecest35(false,"st35")
             try {
-                if (!sessionStorage.getItem("vf4_msg")) throw sessionStorage.setItem("vf4_msg", "");
+                if (!sessionStorage.getItem("st35_msg")) throw sessionStorage.setItem("st35_msg", "");
             }
             finally {
                 //poner funcion que empuje todo el mensaje al local en vez de lo q esta bajo
-                sessionStorage.setItem("vf4_msg", JSON.stringify(msg_summary()));
-                InsertarTexto(JSON.parse(sessionStorage.getItem("vf4_msg")),true)
-                sendFinishStartPieceVF4("reset","vf4")
+                sessionStorage.setItem("st35_msg", JSON.stringify(msg_summary()));
+                InsertarTexto(JSON.parse(sessionStorage.getItem("st35_msg")),true)
+                sendFinishStartPiecest35("reset","st35")
                 document.getElementById("pause_state").style.backgroundColor  = '#0c9df1'
-                // sessionStorage.setItem("vf4_msg_pause", "");
-                sendMsg(msg_summary(),"vf4")
-                sendSelectedPiece("","vf4")
+                // sessionStorage.setItem("st35_msg_pause", "");
+                sendMsg(msg_summary(),"st35")
+                sendSelectedPiece("","st35")
 
             }
         });
@@ -166,14 +166,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
             var today = new Date();
             var now = today.toLocaleString();
-            start_hour = sessionStorage.getItem("vf4_startTime");
+            start_hour = sessionStorage.getItem("st35_startTime");
             listaMensajes.push(
                 ("--------------------------------"),
                 ("Tiempo activo: "+time_msg),
                 ("Tiempo parado: "+time_paused_msg),
                 ("Final: "+now),
                 ("Inicio: "+start_hour),
-                ("Maquina: VF4"),
+                ("Maquina: st35"),
                 ("Codigo de pieza: AR-FRE-"+input_codigo_pieza.value),
                 ("--------------------------------"),
                 );
@@ -214,9 +214,9 @@ window.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        function sendCommandTimerVF4(timer_vf4,machine){
+        function sendCommandTimerst35(timer_st35,machine){
             let url = "http://192.168.0.198:8000/control/timer_vf4/";
-            let params = "&timer_vf4=" + timer_vf4 + "&machine=" + machine;
+            let params = "&timer_st35=" + timer_st35 + "&machine=" + machine;
             console.log('send command');
         
             // var params = "lorem=ipsum&name=alpha";
@@ -229,9 +229,9 @@ window.addEventListener("DOMContentLoaded", () => {
             xhr.send(params);
         }
 
-        function sendFinishStartPieceVF4(state,machine){
+        function sendFinishStartPiecest35(state,machine){
             let url = "http://192.168.0.198:8000/control/finish_start_vf4/";
-            let params = "&state=" + state + "&machine=" + machine;
+            let params = "&state=" + state + "&machine=" + machine;;
             console.log('send command');
         
             // var params = "lorem=ipsum&name=alpha";
@@ -269,16 +269,16 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 
-function timer(dataWs) {
-    // console.log(dataWs.vf4_piece);
-    horas = dataWs.timer_vf4["horas"];
-    minutos = dataWs.timer_vf4["minutos"];
-    segundos = dataWs.timer_vf4["segundos"];
-    horas_stoped = dataWs.timer_vf4["horas_stoped"];
-    minutos_stoped = dataWs.timer_vf4["minutos_stoped"];
-    segundos_stoped = dataWs.timer_vf4["segundos_stoped"];
-    // console.log((sessionStorage.getItem("vf4_startTime")),(start_hour));
-    // console.log(typeof(sessionStorage.getItem("vf4_startTime")),typeof(start_hour));
+function st35(dataWs) {
+    console.log(dataWs.st35_piece);
+    horas = dataWs.timer_st35["horas"];
+    minutos = dataWs.timer_st35["minutos"];
+    segundos = dataWs.timer_st35["segundos"];
+    horas_stoped = dataWs.timer_st35["horas_stoped"];
+    minutos_stoped = dataWs.timer_st35["minutos_stoped"];
+    segundos_stoped = dataWs.timer_st35["segundos_stoped"];
+    // console.log((sessionStorage.getItem("st35_startTime")),(start_hour));
+    // console.log(typeof(sessionStorage.getItem("st35_startTime")),typeof(start_hour));
     
 
 
@@ -290,7 +290,7 @@ function timer(dataWs) {
     document.getElementById("hours_stoped").innerHTML = horas_stoped < 10 ? "0" + horas_stoped : horas_stoped;
     document.getElementById("minutes_stoped").innerHTML = minutos_stoped < 10 ? "0" + minutos_stoped : minutos_stoped;
 
-    document.getElementById("piece_code").innerHTML = dataWs.vf4_piece
+    document.getElementById("piece_code").innerHTML = dataWs.st35_piece
 }
 
  

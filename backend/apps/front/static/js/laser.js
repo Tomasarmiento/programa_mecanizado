@@ -10,6 +10,8 @@ window.addEventListener("DOMContentLoaded", () => {
     const nesting_col_a = document.getElementById("nesting_col_a");
     const nesting_col_b = document.getElementById("nesting_col_b");
     const nesting_2mm = document.getElementById("nesting_2mm");
+    const nesting_3mm = document.getElementById("nesting_3mm");
+    const nesting_475mm = document.getElementById("nesting_475mm");
     const piece_input = document.getElementById("piece_input");
     var selected_value = ""
     var selected_multiply_value = 1
@@ -131,7 +133,15 @@ window.addEventListener("DOMContentLoaded", () => {
     nesting_2mm.addEventListener("click", (e) => {
         selected_value = "nesting_2mm"
         nesting_input.value = "nesting_2mm"
-  });
+    });
+    nesting_3mm.addEventListener("click", (e) => {
+      selected_value = "nesting_3mm"
+      nesting_input.value = "nesting_3mm"
+    });
+    nesting_475mm.addEventListener("click", (e) => {
+      selected_value = "nesting_475mm"
+      nesting_input.value = "nesting_475mm"
+    });
 
 
     

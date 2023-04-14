@@ -43,6 +43,8 @@ class FrontConsumer(AsyncWebsocketConsumer):
                     "type": "websocket.send",
                     "data": {
                         'timer_vf4': machine_variables.VF_4_TIMER,
+                        'timer_vf2': machine_variables.VF_2_TIMER,
+                        'timer_st35': machine_variables.ST35_TIMER,
                         'vf2_piece': machine_variables.ACTUAL_PIECE["vf2"],
                         'vf4_piece': machine_variables.ACTUAL_PIECE["vf4"],
                         'st35_piece': machine_variables.ACTUAL_PIECE["st35"],

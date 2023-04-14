@@ -9,8 +9,14 @@ from django.views.decorators.csrf import csrf_exempt
 def index(request):
     return render(request, "index.html")
 
-def timer(request):
-    return render(request, "timer.html")
+def vf4(request):
+    return render(request, "vf4.html")
+
+def vf2(request):
+    return render(request, "vf2.html")
+
+def st35(request):
+    return render(request, "st35.html")
 
 def laser(request):
     return render(request, "laser.html")

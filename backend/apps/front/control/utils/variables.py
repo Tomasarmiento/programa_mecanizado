@@ -9,6 +9,8 @@ SHEETS_NESTINGS = {
     'sheet_nesting_columnas_a' : 1603688490919812,
     'sheet_nesting_columnas_b' : 3707037054986116,
     'sheet_nesting_2mm': 6923393376249732,
+    'sheet_nesting_3mm': 2085662664642436,
+    'sheet_nesting_475mm': 1651924117966724,
     'sheet_single_pieces' : 3027194144644,
 }
 
@@ -60,8 +62,33 @@ VF_4_TIMER = {
     'segundos_stoped' : 0,
 }
 
+VF_2_TIMER = {
+    'horas' : 0,
+    'minutos' : 0,
+    'segundos' : 0,
+    'horas_stoped' : 0,
+    'minutos_stoped' : 0,
+    'segundos_stoped' : 0,
+}
+
+ST35_TIMER = {
+    'horas' : 0,
+    'minutos' : 0,
+    'segundos' : 0,
+    'horas_stoped' : 0,
+    'minutos_stoped' : 0,
+    'segundos_stoped' : 0,
+}
 
 VF_4_TIMER_STATUS = {
+    'pause' : False,
+}
+
+VF_2_TIMER_STATUS = {
+    'pause' : False,
+}
+
+ST35_TIMER_STATUS = {
     'pause' : False,
 }
 
@@ -88,3 +115,6 @@ RESUME_MSG = {
 
 class MasterState:
     master_running = False
+    run_vf2_timer = False
+    run_vf4_timer = False
+    run_st35_timer = False

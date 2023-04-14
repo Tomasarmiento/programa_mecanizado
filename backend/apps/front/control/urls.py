@@ -12,4 +12,5 @@ urlpatterns = [
     path('msg_pause/', views.msg_pause, name='msg_pause'),
     path('msg_ss/', views.msg_ss, name='msg_ss'),
     path('send_ss/', views.send_ss, name='send_ss'),
+    path('finishCicle/', views.finish_cicle, name='finish_cicle'),
 ]

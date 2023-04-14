@@ -12,7 +12,7 @@
     <link rel="stylesheet"  href="{% static '../static/bootstrap/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css"  href="{% static '../static/bootstrap/bootstrap.min.css.map' %}">
     <link href="{% static '../static/css/main.css' %}" rel="stylesheet">
-    <script src="{% static 'js/timer.js' %}"></script>
+    
     <script src="{% static 'js/main.js' %}"></script>
 </head>
 <body>
@@ -25,13 +25,20 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a id="timer" class="nav-link" href="{% url 'timer' %}" >Timer</a>
+                    <a id="timer" class="nav-link" href="{% url 'vf4' %}" >VF4</a>
+                </li>
+                <li class="nav-item">
+                  <a id="timer" class="nav-link" href="{% url 'vf2' %}" >VF2</a>
+                </li>
+                <li class="nav-item">
+                  <a id="laser" class="nav-link" href="{% url 'st35' %}" >ST35</a>
                 </li>
                 <li class="nav-item">
                     <a id="laser" class="nav-link" href="{% url 'laser' %}" >Laser</a>
                 </li>
-            </ul>
-          </div>
+              </ul>
+            </div>
+              <button id="btn_end_cicle" class="btn float-right btn-primary">Finalizar turno</button>
         </div>
       </nav>
 <section id="root">

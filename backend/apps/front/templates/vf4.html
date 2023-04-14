@@ -1,0 +1,113 @@
+{% extends 'index.html'%}
+{% load static %}
+{% block content %}
+
+<script src="{% static 'js/timer.js' %}"></script>
+<div class="d-flex flex-row p-2">
+    <div class="col-md-6 col-12">
+        <div class="col-md-8 col-12 input-group input-group-lg mx-auto">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-lg">Código: AR-FRE-</span>
+            </div>
+            <input value= 0 id="codigo_pieza" type="number" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+            <button id="btn_select" class="btn btn-success">Select</button>
+        </div>
+
+        <div class="timer_container mx-auto" >
+            <div id="piece_code" class="letering_timer">Codigo</div>
+            <div class="frame_start_timer" style="margin-top: 15px;">
+
+                <div class="hours_start_container">
+                    <div class="hours_letering_container">
+                        <div id="hours" class="hours_letering_value"> 00 </div>
+                    </div>
+                    <div class="hours_letering">Hours</div>
+                </div>
+
+                <div class="minutes_start_container">
+                    <div class="minutes_letering_container">
+                        <div id="minutes" class="minutes_letering_value"> 00 </div>
+                    </div>
+                    <div class="minutes_letering">Minutes</div>
+                </div>
+
+                <div class="seconds_start_container">
+                    <div class="seconds_letering_container">
+                        <div id="seconds" class="seconds_letering_value"> 00 </div>
+                    </div>
+                    <div class="seconds_letering">Seconds</div>
+                </div>
+            </div>
+
+            <div class="frame_start_timer" style="margin-top: 15px;">
+
+                <div class="hours_start_container">
+                    <div class="hours_letering_container_red">
+                        <div id="hours_stoped" class="hours_letering_value"> 00 </div>
+                    </div>
+                    <div class="hours_letering">Hours</div>
+                </div>
+
+                <div class="minutes_start_container">
+                    <div class="minutes_letering_container_red">
+                        <div id="minutes_stoped" class="minutes_letering_value"> 00 </div>
+                    </div>
+                    <div class="minutes_letering">Minutes</div>
+                </div>
+
+                <div class="seconds_start_container">
+                    <div class="seconds_letering_container_red">
+                        <div id="seconds_stoped" class="seconds_letering_value"> 00 </div>
+                    </div>
+                    <div class="seconds_letering">Seconds</div>
+                </div>
+            </div>
+
+            <div class="buttons_container" style="margin-top: 40px;">
+                <button id="btn_reset" class="btn reset_button btn-warning">RESET</button>
+                <button id="btn_pause" class="btn pause_button btn-danger">PAUSE</button>
+                <button id="btn_start" class="btn start_button btn-success">START</button>
+            </div>
+
+            <hr class="hr_property" size="5px" width="95%" color="white"/>
+            
+            <div class="buttons_container" >
+                <button id="btn_finish" class="btn terminar_button btn-primary">TERMINAR</button>
+
+            </div>
+
+            <!-- <div class="bg-yellow"></div> -->
+            <!-- <div id="unpause_state" class=" unpause_state_bar"></div> -->
+            <div id="pause_state" class="pause_state_bar" style="margin-top: 27px;"></div>
+        </div>
+
+    </div>
+    <div class="col-md-6 col-12">
+        <div id="contenedor-terminal-texto" class="card col-md-9 mx-auto border shadow rounded bg-white p-1" style="height: 50%;">
+            <div id="salidaDeTexto"></div>
+                {% include 'cuadroMensajes.html'%}
+        </div>
+        <div class=" col-md-8 mx-auto p-1" style="height: 20%;">
+            <div>
+                <button id="btn_ss_send" class="btn btn-primary">Enviar SS</button>
+                <button id="btn_reset_all" class="btn btn-warning float-right">Reset All</button>
+            </div>
+        </div>
+        
+        <div id="contenedor-terminal-texto" class="card col-md-9 mx-auto border shadow rounded bg-white p-1" style="height: 30%;">
+            <div id="salidaDeTexto"></div>
+                {% include 'cuadroMensajesPausa.html'%}
+        </div>
+
+        <div class="col-md-8 col-12 input-group input-group-lg mx-auto p-1">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-lg">Motivo Pausa</span>
+            </div>
+            <input id="pause_motive" placeholder="Ingrese pausa" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" disabled>
+            <button id="btn_add" class="btn btn-success">Añadir</button>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}

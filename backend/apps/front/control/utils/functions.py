@@ -2,7 +2,7 @@ import smartsheet
 import json,requests
 import time
 
-from apps.front.control.utils.variables import ACCESS_TOKEN,SHEET_ID,COLUMN_VALUE_TO_SEARCH,CLIENT,VF_4_TIMER,RESUME_MSG,PAUSE_STRINGS,SHEET_ID_HASS
+from apps.front.control.utils.variables import ACCESS_TOKEN,SHEET_ID,COLUMN_VALUE_TO_SEARCH,CLIENT,VF_4_TIMER,RESUME_MSG,PAUSE_STRINGS,SHEET_ID_HASS,VF_2_TIMER,ST35_TIMER
 # from apps.front.control.apps import CLIENTE
 
 def get_response_wos():
@@ -175,6 +175,14 @@ def reset_variables_of_machine(model_machine):
         RESUME_MSG["vf4"] = ""
         PAUSE_STRINGS["vf4_pause_strings"] = []
         for k in VF_4_TIMER: VF_4_TIMER[k] = 0
+    elif model_machine == "vf2":
+        RESUME_MSG["vf2"] = ""
+        PAUSE_STRINGS["vf2_pause_strings"] = []
+        for k in VF_2_TIMER: VF_2_TIMER[k] = 0
+    elif model_machine == "st35":
+        RESUME_MSG["st35"] = ""
+        PAUSE_STRINGS["st35"] = []
+        for k in ST35_TIMER: ST35_TIMER[k] = 0
 
 def create_ss_msg(resume_msg,dict_pause_msg):
     msg_pause_to_append = ""
@@ -199,8 +207,16 @@ def send_ss_cmd(model_machine):
         resume_msg = RESUME_MSG["vf4"]
         pause_msg = PAUSE_STRINGS["vf4_pause_strings"]
         resume_msg = create_ss_msg(resume_msg,pause_msg)
+    elif model_machine == "vf2":
+        resume_msg = RESUME_MSG["vf2"]
+        pause_msg = PAUSE_STRINGS["vf2_pause_strings"]
+        resume_msg = create_ss_msg(resume_msg,pause_msg)
+    elif model_machine == "st35":
+        resume_msg = RESUME_MSG["st35"]
+        pause_msg = PAUSE_STRINGS["st35_pause_strings"]
+        resume_msg = create_ss_msg(resume_msg,pause_msg)
     
-    print("pause msgaaa",pause_msg)
+    print("mensaje en camino",resume_msg)
 
     
     url = f"https://api.smartsheet.com/2.0/sheets/{sheet_id}" #CORE ID
@@ -213,7 +229,7 @@ def send_ss_cmd(model_machine):
     response = requests.request("GET", url, headers=headers)
     sheetParts = json.loads(response.text)
 
-    # print(sheetParts['columns'])
+    print(sheetParts['columns'])
 
     filas = sheetParts['rows']
     # for n in filas:
@@ -233,6 +249,7 @@ def send_ss_cmd(model_machine):
         return None
 
     def test():
+        print("test")
         for n in filas:
             for w in range(0,len(n['cells'])):
                 print(n['cells'][w])
@@ -250,6 +267,8 @@ def send_ss_cmd(model_machine):
 
     print(resume_msg)
     reset_variables_of_machine("vf4")
+    reset_variables_of_machine("vf2")
+    reset_variables_of_machine("st35")
 
 
     # print(resume_msg, pause_msg)

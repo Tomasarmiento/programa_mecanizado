@@ -44,6 +44,10 @@ def nesting_select(request):
         sheets_variables.SHEET_ID['id'] = sheets_variables.SHEETS_NESTINGS['sheet_nesting_columnas_b']
     elif nesting == "nesting_2mm":
         sheets_variables.SHEET_ID['id'] = sheets_variables.SHEETS_NESTINGS['sheet_nesting_2mm']
+    elif nesting == "nesting_3mm":
+        sheets_variables.SHEET_ID['id'] = sheets_variables.SHEETS_NESTINGS['sheet_nesting_3mm']
+    elif nesting == "nesting_475mm":
+        sheets_variables.SHEET_ID['id'] = sheets_variables.SHEETS_NESTINGS['sheet_nesting_475mm']
 
     print(sheets_variables.SHEET_ID['id'])
     # all_values_column()
@@ -95,19 +99,33 @@ def timer_vf4(request):
 
 
     state_button = req_data[0][1]
+    machine = req_data[1][1]
     print(state_button)
 
+    if machine == "vf2":
+        sheets_variables.MasterState.run_vf2_timer = True
+        if state_button == "start":
+            sheets_variables.VF_2_TIMER_STATUS['pause'] = False
+        else:
+            sheets_variables.VF_2_TIMER_STATUS['pause'] = True
 
-    if state_button == "start":
-        sheets_variables.VF_4_TIMER_STATUS['pause'] = False
-        if sheets_variables.MasterState.master_running != True:
-            MasterHandler().start()
-            
-    else:
-        sheets_variables.VF_4_TIMER_STATUS['pause'] = True
-        if sheets_variables.MasterState.master_running != True:
-            MasterHandler().start()
-        
+    elif machine == "vf4":
+        sheets_variables.MasterState.run_vf4_timer = True
+        if state_button == "start":
+            sheets_variables.VF_4_TIMER_STATUS['pause'] = False
+        else:
+            sheets_variables.VF_4_TIMER_STATUS['pause'] = True
+
+    elif machine == "st35":
+        sheets_variables.MasterState.run_st35_timer = True
+        if state_button == "start":
+            sheets_variables.ST35_TIMER_STATUS['pause'] = False
+        else:
+            sheets_variables.ST35_TIMER_STATUS['pause'] = True
+
+    if sheets_variables.MasterState.master_running != True:
+        MasterHandler().start()
+
 
     return JsonResponse({})
 
@@ -123,9 +141,28 @@ class StartRoutine(View):
         
         return JsonResponse({})
     
-
+@csrf_exempt
+def finish_cicle(request):
     
+    post_req = request.POST
+    print(post_req)
 
+    req_data = []
+        
+    for item in post_req.items():   # Item is in (key, value) format
+        req_data.append(item)
+
+
+    machine = req_data[0][1]
+    if machine == "vf4":
+        sheets_variables.MasterState.run_vf4_timer = False
+    elif machine == "vf2":
+        sheets_variables.MasterState.run_vf2_timer = False
+        # sheets_variables.MasterState.master_running = False
+    elif machine == "st35":
+        sheets_variables.MasterState.run_st35_timer = False
+
+    return JsonResponse({})
 
 @csrf_exempt
 def finish_start_vf4(request):
@@ -140,16 +177,33 @@ def finish_start_vf4(request):
 
 
     state_button = req_data[0][1]
+    machine = req_data[1][1]
     print(state_button)
+    if machine == "vf4":
+        if state_button == "reset":
+            for k in sheets_variables.VF_4_TIMER: sheets_variables.VF_4_TIMER[k] = 0
+            # reset_variables_of_machine("vf4")
+        if state_button == "reset_all":
+            reset_variables_of_machine("vf4")
 
-    if state_button == "reset":
-        for k in sheets_variables.VF_4_TIMER: sheets_variables.VF_4_TIMER[k] = 0
-        # reset_variables_of_machine("vf4")
-    if state_button == "reset_all":
-        reset_variables_of_machine("vf4")
+        sheets_variables.MasterState.run_vf4_timer = False
+    elif machine == "vf2":
+        if state_button == "reset":
+            for k in sheets_variables.VF_2_TIMER: sheets_variables.VF_2_TIMER[k] = 0
+            # reset_variables_of_machine("vf4")
+        if state_button == "reset_all":
+            reset_variables_of_machine("vf2")
 
+        sheets_variables.MasterState.run_vf2_timer = False
+        # sheets_variables.MasterState.master_running = False
+    elif machine == "st35":
+        if state_button == "reset":
+            for k in sheets_variables.ST35_TIMER: sheets_variables.ST35_TIMER[k] = 0
+            # reset_variables_of_machine("vf4")
+        if state_button == "reset_all":
+            reset_variables_of_machine("st35")
 
-    sheets_variables.MasterState.master_running = False
+        sheets_variables.MasterState.run_st35_timer = False
 
     return JsonResponse({})
     
@@ -167,12 +221,18 @@ def selected_piece(request):
 
 
     piece = req_data[0][1]
+    machine = req_data[1][1]
     print(piece)
 
-
-    sheets_variables.ACTUAL_PIECE["vf4"] = "AR-FRE-"
-    sheets_variables.ACTUAL_PIECE["vf4"] = sheets_variables.ACTUAL_PIECE["vf4"] + piece
-
+    if machine == "vf4":
+        sheets_variables.ACTUAL_PIECE["vf4"] = "AR-FRE-"
+        sheets_variables.ACTUAL_PIECE["vf4"] = sheets_variables.ACTUAL_PIECE["vf4"] + piece
+    elif machine == "vf2":
+        sheets_variables.ACTUAL_PIECE["vf2"] = "AR-FRE-"
+        sheets_variables.ACTUAL_PIECE["vf2"] = sheets_variables.ACTUAL_PIECE["vf2"] + piece
+    elif machine == "st35":
+        sheets_variables.ACTUAL_PIECE["st35"] = "AR-TOR-"
+        sheets_variables.ACTUAL_PIECE["st35"] = sheets_variables.ACTUAL_PIECE["st35"] + piece
     
     return JsonResponse({})
 
@@ -195,6 +255,12 @@ def msg_pause(request):
 
     if machine == "vf4" and pause_msg != "":
         sheets_variables.PAUSE_STRINGS['vf4_pause_strings'].append(pause_msg)
+        # print(sheets_variables.PAUSE_STRINGS['vf4_pause_strings'])
+    if machine == "vf2" and pause_msg != "":
+        sheets_variables.PAUSE_STRINGS['vf2_pause_strings'].append(pause_msg)
+        # print(sheets_variables.PAUSE_STRINGS['vf4_pause_strings'])
+    if machine == "st35" and pause_msg != "":
+        sheets_variables.PAUSE_STRINGS['st35_pause_strings'].append(pause_msg)
         # print(sheets_variables.PAUSE_STRINGS['vf4_pause_strings'])
 
     print("pause msggggg",pause_msg)
@@ -247,6 +313,12 @@ def msg_ss(request):
     if ss_machine == "vf4" and ss_msg != "":
         sheets_variables.RESUME_MSG['vf4'] = new_arr
         # print(sheets_variables.RESUME_MSG['vf4'])
+    if ss_machine == "vf2" and ss_msg != "":
+        sheets_variables.RESUME_MSG['vf2'] = new_arr
+        # print(sheets_variables.RESUME_MSG['vf4'])
+    if ss_machine == "vf2" and ss_msg != "":
+        sheets_variables.RESUME_MSG['st35'] = new_arr
+        # print(sheets_variables.RESUME_MSG['vf4'])
 
 
     # sheets_variables.RESUME_MSG['vf4_pause_strings'].append(ss_pause_msg)
@@ -274,7 +346,12 @@ def send_ss(request):
     if ss_send_machine == "vf4":
         sheets_variables.SHEET_ID_HASS['id'] = sheets_variables.SHEETS_HASS['vf4']
         send_ss_cmd("vf4")
-
+    if ss_send_machine == "vf2":
+        sheets_variables.SHEET_ID_HASS['id'] = sheets_variables.SHEETS_HASS['vf2']
+        send_ss_cmd("vf2")
+    if ss_send_machine == "st35":
+        sheets_variables.SHEET_ID_HASS['id'] = sheets_variables.SHEETS_HASS['st35']
+        send_ss_cmd("vf2")
 
 
     return JsonResponse({})

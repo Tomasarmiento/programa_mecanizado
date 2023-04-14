@@ -23,19 +23,19 @@ window.addEventListener("DOMContentLoaded", () => {
     
         
         btn_start.addEventListener("click", (e) => {
-            sendCommandTimerVF4("start","vf4")
+            sendCommandTimervf2("start","vf2")
             document.getElementById("pause_state").style.backgroundColor  = '#31af03'
             first_start ++
             if (first_start == 1){
                 var today = new Date();
                 start_hour = today.toLocaleString();
-                sessionStorage.setItem("vf4_startTime", (start_hour));
+                sessionStorage.setItem("vf2_startTime", (start_hour));
             }
     
         });
     
         btn_pause.addEventListener("click", (e) => {
-            sendCommandTimerVF4("pause","vf4")
+            sendCommandTimervf2("pause","vf2")
             btn_start.disabled = true;
             document.getElementById("pause_state").style.backgroundColor  = '#ff0000'
             input_pause_motive.disabled = false;
@@ -44,19 +44,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
         btn_reset_all.addEventListener("click", (e) => {
             input_codigo_pieza.disabled = false;
-            sendFinishStartPieceVF4("reset_all","vf4")
+            sendFinishStartPiecevf2("reset_all","vf2")
             first_start = 0
         });
 
         btn_ss_send.addEventListener("click", (e) => {
-            sendSS("vf4")
+            sendSS("vf2")
             input_codigo_pieza.disabled = false;
             input_codigo_pieza.value = 0
         });
     
         btn_reset.addEventListener("click", (e) => {
             input_codigo_pieza.disabled = false;
-            sendFinishStartPieceVF4("reset","vf4")
+            sendFinishStartPiecevf2("reset","vf2")
             first_start = 0
             btn_start.disabled = false;
 
@@ -64,8 +64,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
         btn_select.addEventListener("click", (event) => {
             input_codigo_pieza.disabled = true;
-            sendFinishStartPieceVF4(true,"vf4")
-            sendSelectedPiece(input_codigo_pieza.value,"vf4")
+            sendFinishStartPiecevf2(true,"vf2")
+            sendSelectedPiece(input_codigo_pieza.value,"vf2")
             
 
         });
@@ -75,15 +75,15 @@ window.addEventListener("DOMContentLoaded", () => {
                 alert("Campo de errores vacio !")
             } else{
                 try {
-                    if (!sessionStorage.getItem("vf4_msg_pause")) throw sessionStorage.setItem("vf4_msg_pause", "");
+                    if (!sessionStorage.getItem("vf2_msg_pause")) throw sessionStorage.setItem("vf2_msg_pause", "");
                 }
                 finally {
                     //poner funcion que empuje todo el mensaje al local en vez de lo q esta bajo
-                    sessionStorage.setItem("vf4_msg_pause", JSON.stringify(msg_pause()));
-                    value = JSON.parse(sessionStorage.getItem("vf4_msg_pause"))
+                    sessionStorage.setItem("vf2_msg_pause", JSON.stringify(msg_pause()));
+                    value = JSON.parse(sessionStorage.getItem("vf2_msg_pause"))
                     InsertarTexto(value, false)
                     // value_of_pause = (value[1].split(":")).pop() //posicion de vector donde se encuentra el valor del input
-                    sendMsgStop(input_pause_motive.value,"vf4")
+                    sendMsgStop(input_pause_motive.value,"vf2")
                     input_pause_motive.value = ""
                     btn_start.disabled = false;
                     input_pause_motive.disabled = true;
@@ -93,19 +93,19 @@ window.addEventListener("DOMContentLoaded", () => {
 
         btn_finish.addEventListener("click", (event) => {
             first_start = 0
-            sendFinishStartPieceVF4(false,"vf4")
+            sendFinishStartPiecevf2(false,"vf2")
             try {
-                if (!sessionStorage.getItem("vf4_msg")) throw sessionStorage.setItem("vf4_msg", "");
+                if (!sessionStorage.getItem("vf2_msg")) throw sessionStorage.setItem("vf2_msg", "");
             }
             finally {
                 //poner funcion que empuje todo el mensaje al local en vez de lo q esta bajo
-                sessionStorage.setItem("vf4_msg", JSON.stringify(msg_summary()));
-                InsertarTexto(JSON.parse(sessionStorage.getItem("vf4_msg")),true)
-                sendFinishStartPieceVF4("reset","vf4")
+                sessionStorage.setItem("vf2_msg", JSON.stringify(msg_summary()));
+                InsertarTexto(JSON.parse(sessionStorage.getItem("vf2_msg")),true)
+                sendFinishStartPiecevf2("reset","vf2")
                 document.getElementById("pause_state").style.backgroundColor  = '#0c9df1'
-                // sessionStorage.setItem("vf4_msg_pause", "");
-                sendMsg(msg_summary(),"vf4")
-                sendSelectedPiece("","vf4")
+                // sessionStorage.setItem("vf2_msg_pause", "");
+                sendMsg(msg_summary(),"vf2")
+                sendSelectedPiece("","vf2")
 
             }
         });
@@ -166,14 +166,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
             var today = new Date();
             var now = today.toLocaleString();
-            start_hour = sessionStorage.getItem("vf4_startTime");
+            start_hour = sessionStorage.getItem("vf2_startTime");
             listaMensajes.push(
                 ("--------------------------------"),
                 ("Tiempo activo: "+time_msg),
                 ("Tiempo parado: "+time_paused_msg),
                 ("Final: "+now),
                 ("Inicio: "+start_hour),
-                ("Maquina: VF4"),
+                ("Maquina: vf2"),
                 ("Codigo de pieza: AR-FRE-"+input_codigo_pieza.value),
                 ("--------------------------------"),
                 );
@@ -214,9 +214,9 @@ window.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        function sendCommandTimerVF4(timer_vf4,machine){
+        function sendCommandTimervf2(timer_vf2,machine){
             let url = "http://192.168.0.198:8000/control/timer_vf4/";
-            let params = "&timer_vf4=" + timer_vf4 + "&machine=" + machine;
+            let params = "&timer_vf2=" + timer_vf2 + "&machine=" + machine;
             console.log('send command');
         
             // var params = "lorem=ipsum&name=alpha";
@@ -229,9 +229,9 @@ window.addEventListener("DOMContentLoaded", () => {
             xhr.send(params);
         }
 
-        function sendFinishStartPieceVF4(state,machine){
+        function sendFinishStartPiecevf2(state,machine){
             let url = "http://192.168.0.198:8000/control/finish_start_vf4/";
-            let params = "&state=" + state + "&machine=" + machine;
+            let params = "&state=" + state + "&machine=" + machine;;
             console.log('send command');
         
             // var params = "lorem=ipsum&name=alpha";
@@ -269,16 +269,16 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 
-function timer(dataWs) {
-    // console.log(dataWs.vf4_piece);
-    horas = dataWs.timer_vf4["horas"];
-    minutos = dataWs.timer_vf4["minutos"];
-    segundos = dataWs.timer_vf4["segundos"];
-    horas_stoped = dataWs.timer_vf4["horas_stoped"];
-    minutos_stoped = dataWs.timer_vf4["minutos_stoped"];
-    segundos_stoped = dataWs.timer_vf4["segundos_stoped"];
-    // console.log((sessionStorage.getItem("vf4_startTime")),(start_hour));
-    // console.log(typeof(sessionStorage.getItem("vf4_startTime")),typeof(start_hour));
+function vf2(dataWs) {
+    console.log(dataWs.vf2_piece);
+    horas = dataWs.timer_vf2["horas"];
+    minutos = dataWs.timer_vf2["minutos"];
+    segundos = dataWs.timer_vf2["segundos"];
+    horas_stoped = dataWs.timer_vf2["horas_stoped"];
+    minutos_stoped = dataWs.timer_vf2["minutos_stoped"];
+    segundos_stoped = dataWs.timer_vf2["segundos_stoped"];
+    // console.log((sessionStorage.getItem("vf2_startTime")),(start_hour));
+    // console.log(typeof(sessionStorage.getItem("vf2_startTime")),typeof(start_hour));
     
 
 
@@ -290,7 +290,7 @@ function timer(dataWs) {
     document.getElementById("hours_stoped").innerHTML = horas_stoped < 10 ? "0" + horas_stoped : horas_stoped;
     document.getElementById("minutes_stoped").innerHTML = minutos_stoped < 10 ? "0" + minutos_stoped : minutos_stoped;
 
-    document.getElementById("piece_code").innerHTML = dataWs.vf4_piece
+    document.getElementById("piece_code").innerHTML = dataWs.vf2_piece
 }
 
  
